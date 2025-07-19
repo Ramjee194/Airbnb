@@ -39,6 +39,10 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/bookings", bookingRouter);
 app.use("/api/review", reviewRouter);
 
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
 
 
 app.listen(port, () => {
