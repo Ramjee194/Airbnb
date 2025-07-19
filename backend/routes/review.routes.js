@@ -7,4 +7,4 @@ const reviewRouter = express.Router();
 reviewRouter.post("/add", isAuth, addReview);
 reviewRouter.get("/:id", getReviews); // get reviews for a listing
 
-export default router;
+export default reviewRouter;
