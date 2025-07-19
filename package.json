@@ -1,0 +1,23 @@
+{
+  "name": "major-project-mern",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+ "scripts": {
+  "install": "cd backend && npm install && cd ../frontend && npm install",
+  "build": "cd frontend && npm run build",
+  "start": "cd backend && node index.js"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ramjee194/Airbnb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ramjee194/Airbnb/issues"
+  },
+  "homepage": "https://github.com/Ramjee194/Airbnb#readme"
+}
