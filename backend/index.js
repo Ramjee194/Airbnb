@@ -8,6 +8,7 @@ import userRouter from './routes/user.route.js'
 import listingRouter from './routes/listing.route.js'
 import bookingRouter from './routes/booking.route.js'
 import wishlistRoutes from './routes/wishlist.routes.js';
+import reviewRouter from './routes/review.routes.js'
 
 
 
@@ -33,9 +34,10 @@ app.use(cookieParser())
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
 app.use("/api/listing", listingRouter)
-app.use("/api/booking", bookingRouter)
+
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/bookings", bookingRouter);
+app.use("/api/review", reviewRouter);
 
 
 
