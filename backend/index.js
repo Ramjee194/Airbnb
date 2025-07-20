@@ -21,7 +21,7 @@ const app = express()
 
 //  Allow requests from any origin (for development)
 app.use(cors({
-    origin: 'http://localhost:5173', // <--- your frontend URL
+    origin: 'https://airbnb-1-ui1y.onrender.com/', // <--- your frontend URL
     credentials: true                // <--- allow cookies, auth headers, etc.
 }));
 
