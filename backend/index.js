@@ -20,8 +20,19 @@ const app = express()
 
 
 //  Allow requests from any origin (for development)
+const allowedOrigins = [
+  "https://airbnb-1-ui1y.onrender.com", // ✅ deployed frontend
+  "http://localhost:5173"               // ✅ dev frontend
+];
+
 app.use(cors({
-  origin: 'https://airbnb-1-ui1y.onrender.com', // ✅ no trailing slash
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 
