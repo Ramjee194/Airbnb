@@ -6,7 +6,7 @@ const WishlistButton = ({ listingId, isWishlisted, refresh }) => {
   const { serverURl } = useContext(userDataContext);
 
   const toggleWishlist = async () => {
-    await axios.post(`${serverURl}/api/wishlist/toggle`, { listingId }, { withCredentials: true });
+    await axios.post(`${"https://airbnb-chpu.onrender.com"}/api/wishlist/toggle`, { listingId }, { withCredentials: true });
     refresh();
   };
 

@@ -16,7 +16,7 @@ function ListingDetails() {
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        const res = await axios.get(`${serverURl}/api/listing/findlistingbyid/${id}`, {
+        const res = await axios.get(`${"https://airbnb-chpu.onrender.com"}/api/listing/findlistingbyid/${id}`, {
           withCredentials: true
         });
         setListing(res.data);
@@ -25,23 +25,23 @@ function ListingDetails() {
       }
     };
     fetchListing();
-  }, [id, serverURl]);
+  }, [id, "https://airbnb-chpu.onrender.com"]);
 
   // Check booking status after listing is loaded
   useEffect(() => {
     if (listing && listing._id) {
       axios
-        .get(`${serverURl}/api/booking/check?listingId=${listing._id}`, {
+        .get(`${"https://airbnb-chpu.onrender.com"}/api/booking/check?listingId=${listing._id}`, {
           withCredentials: true
         })
         .then((res) => setIsBooked(res.data.isBooked))
         .catch((err) => console.error("Booking check failed:", err.message));
     }
-  }, [listing, serverURl]);
+  }, [listing, "https://airbnb-chpu.onrender.com"]);
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${serverURl}/api/listing/delete/${id}`, {
+      await axios.delete(`${"https://airbnb-chpu.onrender.com"}/api/listing/delete/${id}`, {
         withCredentials: true
       });
       navigate("/mylistings");

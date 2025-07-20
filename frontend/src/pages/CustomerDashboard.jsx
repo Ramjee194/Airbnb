@@ -14,8 +14,8 @@ const CustomerDashboard = () => {
     const fetchData = async () => {
       try {
         const [bookingsRes, wishlistRes] = await Promise.all([
-          axios.get(`${serverURl}/api/bookings/my`, { withCredentials: true }),
-          axios.get(`${serverURl}/api/wishlist`, { withCredentials: true }),
+          axios.get(`${"https://airbnb-chpu.onrender.com"}/api/bookings/my`, { withCredentials: true }),
+          axios.get(`${"https://airbnb-chpu.onrender.com"}/api/wishlist`, { withCredentials: true }),
         ]);
         setBookings(bookingsRes.data);
         setWishlist(wishlistRes.data);
@@ -26,7 +26,7 @@ const CustomerDashboard = () => {
       }
     };
     fetchData();
-  }, [serverURl]);
+  }, ["https://airbnb-chpu.onrender.com"]);
 
   return (
     <div className="bg-gradient-to-r from-purple-100 via-rose-50 to-pink-100 min-h-screen mt-10">

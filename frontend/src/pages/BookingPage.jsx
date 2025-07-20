@@ -29,7 +29,7 @@ function BookingPage() {
         setLoading(true);
         try {
             const res = await axios.post(
-                `${serverURl}/api/booking/create`,
+                `${"https://airbnb-chpu.onrender.com"}/api/booking/create`,
                 { listingId, checkIn, checkOut },
                 { withCredentials: true }
             );

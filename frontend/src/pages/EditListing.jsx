@@ -24,7 +24,7 @@ function EditListing() {
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        const res = await axios.get(`${serverURl}/api/listing/findlistingbyid/${id}`, {
+        const res = await axios.get(`${"https://airbnb-chpu.onrender.com"}/api/listing/findlistingbyid/${id}`, {
           withCredentials: true
         });
         setForm({
@@ -43,7 +43,7 @@ function EditListing() {
       }
     };
     fetchListing();
-  }, [id, serverURl]);
+  }, [id, "https://airbnb-chpu.onrender.com"]);
 
   const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -52,7 +52,7 @@ function EditListing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`${serverURl}/api/listing/update/${id}`, form, {
+      await axios.put(`${"https://airbnb-chpu.onrender.com"}/api/listing/update/${id}`, form, {
         withCredentials: true
       });
       navigate('/mylistings');
@@ -64,7 +64,7 @@ function EditListing() {
   return (
     <div>
       <Nav />
-      <div className="max-w-2xl mx-auto mt-20 p-6 mt-36">
+      <div className="max-w-2xl mx-auto  p-6 mt-36">
         <h2 className="text-xl font-bold mb-4">Edit Listing</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input name="title" value={form.title} onChange={handleChange} className="w-full border p-2" placeholder="Title" />

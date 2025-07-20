@@ -5,7 +5,7 @@ import { useState } from 'react';
 export const AuthDataContext = createContext();
 
 function AuthContextProvider({ children }) {
-  const serverUrl = "http://localhost:8000";
+  const serverUrl = "https://airbnb-chpu.onrender.com";
   const [loading,setLoading] = useState(false)
 
   // define this outside the return

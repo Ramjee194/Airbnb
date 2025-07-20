@@ -42,7 +42,7 @@ const Nav = ({ onSearch, onCategorySelect, selectedCategory }) => {
   };
   const handleLogOut = async () => {
     try {
-      await axios.post(`${serverURl}/api/auth/logout`, {}, { withCredentials: true });
+      await axios.post(`${"https://airbnb-chpu.onrender.com"}/api/auth/logout`, {}, { withCredentials: true });
       setUserData(null);
       navigate("/");
     } catch (error) {

@@ -25,7 +25,7 @@ export const getHostStats = async (req, res) => {
     const listings = await Listing.find({ owner: userId });
 
     // ✅ Count all bookings on those listings
-    const totalBookings = await Booking.countDocuments({
+    const totalBookings = await bookings.countDocuments({
       listing: { $in: listings.map((list) => list._id) }
     });
 

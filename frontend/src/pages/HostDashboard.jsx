@@ -13,7 +13,7 @@ const HostDashboard = () => {
 
   useEffect(() => {
     axios
-      .get(`${serverURl}/api/bookings/stats`, { withCredentials: true })
+      .get(`${"https://airbnb-chpu.onrender.com"}/api/bookings/stats`, { withCredentials: true })
       .then((res) => setData(res.data))
       .catch((err) => console.error("Dashboard data fetch failed", err));
   }, [serverURl]);
@@ -22,7 +22,7 @@ const HostDashboard = () => {
     <div className="bg-gray-50 min-h-screen mt-14">
       <Nav />
       <div className="pt-24 px-6 max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">📊 My Host Dashboard</h1>
+        <h1 className="text-3xl font-bold mb-6 text-gray-800"> My Host Dashboard</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
           <div className="bg-white p-6 rounded-lg shadow">
@@ -36,7 +36,7 @@ const HostDashboard = () => {
           </div>
         </div>
 
-        <h2 className="text-xl font-bold mb-4 text-gray-800">🏘️ My Listings</h2>
+        <h2 className="text-xl font-bold mb-4 text-gray-800">My Listings</h2>
         {data.listings.length === 0 ? (
           <p className="text-gray-500">You haven’t listed any properties yet.</p>
         ) : (

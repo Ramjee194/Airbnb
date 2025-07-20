@@ -11,7 +11,7 @@ function ResetPassword() {
   const handleReset = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:8000/api/auth/reset-password/${token}`, { password });
+      await axios.post(`https://airbnb-chpu.onrender.com/api/auth/reset-password/${token}`, { password });
       setSuccess(true);
     } catch (err) {
       setError("Invalid or expired token");

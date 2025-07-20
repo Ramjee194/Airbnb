@@ -7,7 +7,7 @@ const WishlistPage = () => {
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
-    axios.get(`${serverURl}/api/wishlist`, { withCredentials: true })
+    axios.get(`${"https://airbnb-chpu.onrender.com"}/api/wishlist`, { withCredentials: true })
       .then(res => setListings(res.data));
   }, []);
 

@@ -10,7 +10,7 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${serverURl}/api/auth/forgot-password`, { email });
+      const res = await axios.post(`${"https://airbnb-chpu.onrender.com"}/api/auth/forgot-password`, { email });
       setMsg(res.data.message);
     } catch (err) {
       setMsg(err.response.data.message || 'Something went wrong');

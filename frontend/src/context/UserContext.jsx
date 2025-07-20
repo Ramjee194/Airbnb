@@ -6,11 +6,11 @@ export const userDataContext = createContext();
 function UserContext({ children }) {
   const [userData, setUserData] = useState(null);
 
-  const serverURl = "http://localhost:8000"; // ✅ Update with your backend URL
+  const serverURl = "https://airbnb-chpu.onrender.com"; // ✅ Update with your backend URL
 
   const getProfile = async () => {
     try {
-      const result = await axios.get(`${serverURl}/api/user/profile`, {
+      const result = await axios.get(`${"https://airbnb-chpu.onrender.com"}/api/user/profile`, {
         withCredentials: true, // ✅ Allow sending cookies
       });
 

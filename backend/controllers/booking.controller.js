@@ -105,33 +105,3 @@ export const isListingBooked = async (req, res) => {
 };
 
 
-export const getHostStats = async (req, res) => {
-  try {
-    const userId = req.userId;
-
-    // ✅ Get all listings for this user
-    const listings = await Listing.find({ owner: userId });
-
-    // ✅ Count total bookings on these listings
-    const totalBookings = await Booking.countDocuments({
-      listing: { $in: listings.map((list) => list._id) }
-    });
-
-    // ✅ Fetch bookings for earnings
-    const bookings = await Booking.find({
-      listing: { $in: listings.map((list) => list._id) }
-    });
-
-    // ✅ Calculate total earnings
-    const earnings = bookings.reduce((acc, curr) => acc + curr.totalAmount, 0);
-
-    return res.status(200).json({
-      totalBookings,
-      earnings,
-      listings,
-    });
-  } catch (error) {
-    console.error("❌ Error in getHostStats:", error);
-    return res.status(500).json({ message: "Something went wrong", error });
-  }
-};

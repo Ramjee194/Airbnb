@@ -15,7 +15,7 @@ function MyListings() {
 
   const fetchMyListings = async () => {
     try {
-      const res = await axios.get(`${serverURl}/api/listing/mylistings`, {
+      const res = await axios.get(`${"https://airbnb-chpu.onrender.com"}/api/listing/mylistings`, {
         withCredentials: true,
       });
       setMyListings(res.data.listings); // Assuming server returns array of listings

@@ -38,7 +38,7 @@ function Card({ listing, ratings }) {
     const fetchWishlistStatus = async () => {
       if (!userData?._id) return;
       try {
-        const res = await axios.get(`${serverURl}/api/wishlist/mine`, { withCredentials: true });
+        const res = await axios.get(`${"https://airbnb-chpu.onrender.com"}/api/wishlist/mine`, { withCredentials: true });
         const wishlistedIds = res.data.favorites.map(item => item._id);
         setIsWishlisted(wishlistedIds.includes(listing._id));
       } catch (err) {
@@ -46,12 +46,12 @@ function Card({ listing, ratings }) {
       }
     };
     fetchWishlistStatus();
-  }, [userData, listing._id, serverURl]);
+  }, [userData, listing._id, "https://airbnb-chpu.onrender.com"]);
 
   const toggleWishlist = async (e) => {
     e.stopPropagation();
     try {
-      await axios.post(`${serverURl}/api/wishlist/toggle/${_id}`, {}, { withCredentials: true });
+      await axios.post(`${"https://airbnb-chpu.onrender.com"}/api/wishlist/toggle/${_id}`, {}, { withCredentials: true });
       setIsWishlisted(prev => !prev);
     } catch (err) {
       console.error("Wishlist toggle failed:", err.message);

@@ -9,7 +9,7 @@ function Wishlist() {
   const { serverURl } = useContext(userDataContext);
 
   useEffect(() => {
-    axios.get(`${serverURl}/api/wishlist`, { withCredentials: true })
+    axios.get(`${"https://airbnb-chpu.onrender.com"}/api/wishlist`, { withCredentials: true })
       .then(res => setFavorites(res.data.favorites))
       .catch(err => console.error("Failed to fetch wishlist:", err));
   }, []);

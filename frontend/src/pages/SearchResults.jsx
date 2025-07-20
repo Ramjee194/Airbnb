@@ -12,7 +12,7 @@ function SearchResults() {
   useEffect(() => {
     if (query) {
       axios
-        .get(`http://localhost:8000/api/listings/search?query=${query}`)
+        .get(`https://airbnb-chpu.onrender.com/api/listings/search?query=${query}`)
         .then((res) => setResults(res.data))
         .catch((err) => console.error("Search failed:", err));
     }

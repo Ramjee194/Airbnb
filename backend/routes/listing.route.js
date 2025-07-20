@@ -27,11 +27,13 @@ listingRouter.get("/findlistingbyid/:id", isAuth, findListingById);
 listingRouter.put("/edit/:id", isAuth, updateListing);
 listingRouter.delete("/delete/:id", isAuth, deleteListing);
 listingRouter.get("/withbooking", getAllListingsWithBookingStatus);
+
 listingRouter.get('/public', async (req, res) => {
   try {
-    const listings = await Listing.find().limit(20); // public listings
+    const listings = await Listing.find().limit(20);
     res.json(listings);
   } catch (err) {
+    console.error("Error in /public route:", err.message);
     res.status(500).json({ message: 'Failed to fetch public listings' });
   }
 });

@@ -10,7 +10,7 @@ function Dashboard() {
 
   useEffect(() => {
     axios
-      .get(`${serverURl}/api/dashboard/host`, { withCredentials: true })
+      .get(`${"https://airbnb-chpu.onrender.com"}/api/dashboard/host`, { withCredentials: true })
       .then((res) => setStats(res.data))
       .catch((err) => console.error("Dashboard fetch failed:", err));
   }, []);

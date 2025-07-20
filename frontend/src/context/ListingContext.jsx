@@ -63,7 +63,7 @@ const [selectedCategory, setSelectedCategory] = useState("Trending");
 
   const getListing = async () => {
     try {
-      const result = await axios.get(`${serverUrl}/api/listing/get`, {
+      const result = await axios.get(`${"https://airbnb-chpu.onrender.com"}/api/listing/get`, {
         withCredentials: true,
       });
       console.log("Fetched listings:", result.data);

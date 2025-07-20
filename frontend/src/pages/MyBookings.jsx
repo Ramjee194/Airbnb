@@ -9,7 +9,7 @@ function MyBookings() {
 
     const handleCancel = async (id) => {
         try {
-            await axios.put(`${serverURl}/api/booking/cancel/${id}`, {}, {
+            await axios.put(`${"https://airbnb-chpu.onrender.com"}/api/booking/cancel/${id}`, {}, {
                 withCredentials: true,
             });
             setBookings(prev => prev.map(b => b._id === id ? { ...b, status: "cancelled" } : b));
@@ -21,7 +21,7 @@ function MyBookings() {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const res = await axios.get(`${serverURl}/api/booking/my`, {
+                const res = await axios.get(`${"https://airbnb-chpu.onrender.com"}/api/booking/my`, {
                     withCredentials: true,
                 });
 

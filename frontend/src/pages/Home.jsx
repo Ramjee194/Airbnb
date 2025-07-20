@@ -16,7 +16,7 @@ function Home() {
   useEffect(() => {
     const fetchPublicListings = async () => {
       try {
-        const response = await axios.get(`${serverURl}/api/listing/public`);
+        const response = await axios.get(`${"https://airbnb-chpu.onrender.com"}/api/listing/public`);
         const allListings = response.data || [];
         if (allListings.length > 0) {
           setListings(allListings);

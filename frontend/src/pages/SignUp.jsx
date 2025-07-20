@@ -31,7 +31,7 @@ const Signup = () => {
         setLoading(true)
 
         try {
-            const result = await axios.post(`${serverUrl}/api/auth/signup`, formData, {
+            const result = await axios.post(`${"https://airbnb-chpu.onrender.com"}/api/auth/signup`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
