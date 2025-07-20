@@ -31,7 +31,7 @@ const CustomerDashboard = () => {
   return (
     <div className="bg-gradient-to-r from-purple-100 via-rose-50 to-pink-100 min-h-screen mt-10">
       <Nav />
-      <div className="pt-24 px-4 max-w-7xl mx-auto">
+      <div className="pt-32 px-4 max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-rose-600 mb-8 text-center">Customer Dashboard</h1>
 
         {loading ? (
