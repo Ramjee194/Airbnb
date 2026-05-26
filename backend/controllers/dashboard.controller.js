@@ -10,14 +10,21 @@ export const getHostDashboard = async (req, res) => {
 
     const bookings = await Booking.find({ listing: { $in: listingIds } });
 
-    const totalRevenue = bookings.reduce((sum, b) => sum + b.totalAmount, 0);
+    const totalRevenue = bookings.reduce((sum, b) => sum + (b.totalRent || b.totalAmount || 0), 0);
 
     const listingStats = listings.map((l) => {
       const lBookings = bookings.filter((b) => b.listing.toString() === l._id.toString());
-      const revenue = lBookings.reduce((sum, b) => sum + b.totalAmount, 0);
+      const revenue = lBookings.reduce((sum, b) => sum + (b.totalRent || b.totalAmount || 0), 0);
       return {
         _id: l._id,
         title: l.title,
+        image1: l.image1,
+        image2: l.image2,
+        image3: l.image3,
+        rent: l.rent,
+        city: l.city,
+        landMark: l.landMark,
+        category: l.category,
         bookings: lBookings.length,
         revenue,
       };

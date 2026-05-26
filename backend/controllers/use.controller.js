@@ -46,3 +46,31 @@ export const getHostStats = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong", error });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { name, email, mobile, location } = req.body;
+
+    if (email) {
+      const existingUser = await User.findOne({ email });
+      if (existingUser && existingUser._id.toString() !== req.userId) {
+        return res.status(400).json({ message: "Email is already in use by another account" });
+      }
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.userId,
+      { $set: { name, email, mobile, location } },
+      { new: true }
+    ).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    console.error("Error in updateProfile:", err);
+    res.status(500).json({ message: `Update profile error: ${err.message}` });
+  }
+};

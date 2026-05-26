@@ -8,10 +8,18 @@ export const addListing = async (req, res) => {
     const host = req.userId;
     const { title, description, rent, city, landMark, category } = req.body;
 
+    if (!req.files || !req.files.image1 || !req.files.image1[0]) {
+      return res.status(400).json({ message: "Main image (image1) is required." });
+    }
+
     // Upload images to Cloudinary
     const image1 = await uploadOnCloudinary(req.files.image1[0].path);
-    const image2 = await uploadOnCloudinary(req.files.image2[0].path);
-    const image3 = await uploadOnCloudinary(req.files.image3[0].path);
+    const image2 = req.files.image2 && req.files.image2[0]
+      ? await uploadOnCloudinary(req.files.image2[0].path)
+      : "";
+    const image3 = req.files.image3 && req.files.image3[0]
+      ? await uploadOnCloudinary(req.files.image3[0].path)
+      : "";
 
     // Create new listing
     const listing = await Listing.create({
@@ -102,7 +110,7 @@ export const updateListing = async (req, res) => {
 
 export const findListingById = async (req, res) => {
   try {
-    const listing = await Listing.findById(req.params.id);
+    const listing = await Listing.findById(req.params.id).populate("host", "name email");
     if (!listing) return res.status(404).json({ message: "Listing not found" });
     res.status(200).json(listing);
   } catch (error) {

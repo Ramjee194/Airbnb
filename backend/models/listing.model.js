@@ -16,7 +16,7 @@ export const listingSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
+    required: false,
   },
   image1: {
     type: String,
@@ -24,11 +24,11 @@ export const listingSchema = new mongoose.Schema({
   },
   image2: {
     type: String,
-    required: true,
+    required: false,
   },
   image3: {
     type: String,
-    required: true,
+    required: false,
   },
   rent: {
     type: Number,
@@ -40,7 +40,7 @@ export const listingSchema = new mongoose.Schema({
   },
   landMark: {
     type: String,
-    required: true,
+    required: false,
   },
   category: {
     type: String,

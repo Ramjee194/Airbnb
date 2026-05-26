@@ -8,7 +8,7 @@ import { sendEmail } from '../utils/sendEmail.js';
 // ✅ SIGNUP
 export const signUp = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, mobile, location } = req.body;
         console.log("Signup request body:", req.body);
 
         // ✅ Check if user already exists
@@ -22,7 +22,7 @@ export const signUp = async (req, res) => {
         const hashPassword = await bcrypt.hash(password, 10);
 
         // 👤 Create new user
-        const user = await User.create({ name, email, password: hashPassword });
+        const user = await User.create({ name, email, password: hashPassword, mobile, location });
 
         // 🪙 Generate token
         const token = genToken(user._id);
@@ -40,6 +40,8 @@ export const signUp = async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            mobile: user.mobile,
+            location: user.location,
         });
 
     } catch (error) {
@@ -71,6 +73,8 @@ export const login = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        mobile: user.mobile,
+        location: user.location,
     });
 };
 

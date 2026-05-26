@@ -8,6 +8,7 @@ import {
 const whishlistRouter = express.Router();
 
 whishlistRouter.get("/mine", isAuth, getUserWishlist);
+whishlistRouter.post("/toggle", isAuth, toggleWishlist);
 whishlistRouter.post("/toggle/:listingId", isAuth, toggleWishlist);
 
 export default whishlistRouter ;

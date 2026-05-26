@@ -19,7 +19,7 @@ const bookingSchema = new mongoose.Schema({
  status: {
   type: String,
    enum: ["pending", "booked", "cancelled", "completed", "failed"],
-  default: "booked",
+  default: "pending",
 },
 
   checkIn: {
@@ -33,6 +33,15 @@ const bookingSchema = new mongoose.Schema({
   totalRent: {
     type: Number,
     required: true,
+  },
+  razorpayOrderId: {
+    type: String,
+  },
+  razorpayPaymentId: {
+    type: String,
+  },
+  razorpaySignature: {
+    type: String,
   },
 }, { timestamps: true }); 
 

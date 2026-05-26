@@ -4,6 +4,7 @@ import upload from '../middlewares/multer.js';
 import { addListing,searchListings, getListing, getMyListings ,updateListing,deleteListing, getAllListingsWithBookingStatus, } from '../controllers/listing.controller.js';
 import { findListing } from '../controllers/listing.controller.js';
 import { findListingById } from '../controllers/listing.controller.js';
+import Listing from '../models/listing.model.js';
 
 const listingRouter = express.Router();
 

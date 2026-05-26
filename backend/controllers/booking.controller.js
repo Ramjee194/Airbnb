@@ -1,5 +1,12 @@
 import Booking from "../models/booking.js";
 import Listing from "../models/listing.model.js";
+import Razorpay from "razorpay";
+import crypto from "crypto";
+
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_Skz3bTODSoFn0q",
+  key_secret: process.env.RAZORPAY_KEY_SECRET || "vYxuBCNYDXgZY1CwfMftQfQ6"
+});
 
 export const createBooking = async (req, res) => {
   try {
@@ -31,21 +38,75 @@ export const createBooking = async (req, res) => {
       listing: listingId,
       checkIn,
       checkOut,
-      totalRent
+      totalRent,
+      status: "pending"
     });
 
     await newBooking.save();
-    res.status(201).json({ message: "Booking successful", booking: newBooking });
+
+    // Create Razorpay Order
+    const options = {
+      amount: totalRent * 100, // paise
+      currency: "INR",
+      receipt: `receipt_booking_${newBooking._id}`
+    };
+
+    const razorpayOrder = await razorpay.orders.create(options);
+
+    newBooking.razorpayOrderId = razorpayOrder.id;
+    await newBooking.save();
+
+    res.status(201).json({
+      message: "Booking initiated",
+      booking: newBooking,
+      razorpayOrder
+    });
 
   } catch (err) {
+    console.error("Create booking payment error:", err);
     res.status(500).json({ message: "Booking failed", error: err.message });
+  }
+};
+
+export const verifyPayment = async (req, res) => {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingId } = req.body;
+
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSignature = crypto
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET || "vYxuBCNYDXgZY1CwfMftQfQ6")
+      .update(body.toString())
+      .digest("hex");
+
+    const isAuthentic = expectedSignature === razorpay_signature;
+
+    if (isAuthentic) {
+      const booking = await Booking.findById(bookingId);
+      if (!booking) return res.status(404).json({ message: "Booking not found" });
+
+      booking.status = "booked";
+      booking.razorpayPaymentId = razorpay_payment_id;
+      booking.razorpaySignature = razorpay_signature;
+      await booking.save();
+
+      res.status(200).json({ message: "Payment verified successfully", success: true });
+    } else {
+      const booking = await Booking.findById(bookingId);
+      if (booking) {
+        booking.status = "failed";
+        await booking.save();
+      }
+      res.status(400).json({ message: "Payment verification failed", success: false });
+    }
+  } catch (err) {
+    console.error("Verify payment error:", err);
+    res.status(500).json({ message: "Verification failed", error: err.message });
   }
 };
 
 export const getUserBookings = async (req, res) => {
   try {
     const bookings = await Booking.find({ guest: req.userId }).populate("listing");
-    
     res.status(200).json({ bookings });
   } catch (err) {
     res.status(500).json({ message: "Failed to get bookings", error: err.message });
@@ -55,12 +116,8 @@ export const getUserBookings = async (req, res) => {
 export const cancelBooking = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log("Cancel request for booking ID:", id);
-
     const booking = await Booking.findById(id);
-    console.log("Found booking:", booking);
 
-    console.log("Request user ID:", req.userId);
     if (!booking || booking.guest.toString() !== req.userId) {
       return res.status(403).json({ message: "Unauthorized or booking not found" });
     }
@@ -69,14 +126,10 @@ export const cancelBooking = async (req, res) => {
     await booking.save();
 
     res.status(200).json({ message: "Booking cancelled" });
-
   } catch (err) {
-    console.error("Cancel booking error:", err);
     res.status(500).json({ message: "Cancel failed", error: err.message });
   }
 };
-
-
 
 export const getBookingById = async (req, res) => {
   try {
@@ -88,16 +141,26 @@ export const getBookingById = async (req, res) => {
   }
 };
 
-
 export const isListingBooked = async (req, res) => {
   try {
-    const { listingId } = req.query;
-    const booking = await Booking.findOne({
+    const { listingId, checkIn, checkOut } = req.query;
+    
+    let query = {
       listing: listingId,
-      status: "booked",
-      checkOut: { $gte: new Date() },
-    });
+      status: "booked"
+    };
 
+    if (checkIn && checkOut) {
+      const checkInDate = new Date(checkIn);
+      const checkOutDate = new Date(checkOut);
+      query.$or = [
+        { checkIn: { $lt: checkOutDate }, checkOut: { $gt: checkInDate } }
+      ];
+    } else {
+      query.checkOut = { $gte: new Date() };
+    }
+
+    const booking = await Booking.findOne(query);
     res.status(200).json({ isBooked: !!booking });
   } catch (err) {
     res.status(500).json({ message: "Check failed", error: err.message });

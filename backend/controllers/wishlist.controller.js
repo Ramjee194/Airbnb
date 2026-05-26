@@ -3,7 +3,7 @@ import Wishlist from "../models/wishlist.model.js";
 // Toggle wishlist
 export const toggleWishlist = async (req, res) => {
   const user = req.userId;
-  const { listingId } = req.body;
+  const listingId = req.body.listingId || req.params.listingId;
 
   const existing = await Wishlist.findOne({ user, listing: listingId });
 
